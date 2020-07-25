@@ -3,32 +3,32 @@ services:
     - docker
 
 before_install:
-    - docker build -t webapp -f Dockerfile.dev .
+    - docker build -t client -f Dockerfile.dev ./client
     # add api tests command
 
 script:
-    - docker run -e CI=true webapp npm run test
+    - docker run -e CI=true client npm run test
     # add api tests script
 
 after_success:
-    - docker build -t scootay237/webapp .
-    - docker build -t scootay237/webapi ../webapi
-    - docker build -t scootay237/nginx ../nginx
+    - docker build -t scootay237/client ./client
+    - docker build -t scootay237/api ./api
+    - docker build -t scootay237/nginx ./nginx
     # log into docker cli
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # push images to docker hub
-    - docker push scootay237/webapp
-    - docker push scootay237/webapi
+    - docker push scootay237/client
+    - docker push scootay237/api
     - docker push scootay237/nginx
 
-deploy:
-    provider: elasticbeanstalk
-    region: "us-east-2"
-    app: "webapp"
-    env: "Webapp-env"
-    bucket_name: "elasticbeanstalk-us-east-2-027835436621"
-    bucket_path: "webapp"
-    on: 
-        branch: master
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
+# deploy:
+#     provider: elasticbeanstalk
+#     region: "us-east-2"
+#     app: "webapp"
+#     env: "Webapp-env"
+#     bucket_name: "elasticbeanstalk-us-east-2-027835436621"
+#     bucket_path: "webapp"
+#     on: 
+#         branch: master
+#     access_key_id: $AWS_ACCESS_KEY
+#     secret_access_key: $AWS_SECRET_KEY
