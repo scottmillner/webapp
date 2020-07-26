@@ -4,11 +4,11 @@ services:
 
 before_install:
     - docker build -t client -f ./client/Dockerfile.dev ./client
-    # add api tests command
+    - docker build -t apitests -f ./tests/Dockerfile ./tests
 
 script:
     - docker run -e CI=true client npm run test
-    # add api tests script
+    - docker run apitests
 
 after_success:
     - docker build -t scootay237/client ./client
