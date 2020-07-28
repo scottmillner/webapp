@@ -4,7 +4,7 @@ services:
 
 before_install:
     - docker build -t client -f ./client/Dockerfile.dev ./client
-    - docker build -t apitests -f ./tests/Dockerfile ./tests
+    - docker build -t apitests .
 
 script:
     - docker run -e CI=true client npm run test
