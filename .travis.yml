@@ -20,3 +20,15 @@ after_success:
     - docker push scootay237/client
     - docker push scootay237/api
     - docker push scootay237/nginx
+
+deploy:
+    provider: elasticbeanstalk
+    region: "us-east-2"
+    app: "webapp-multi-container"
+    env: "WebappMultiContainer-env"
+    bucket_name: "elasticbeanstalk-us-east-2-027835436621"
+    bucket_path: "multi-container-webapp"
+    on: 
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
