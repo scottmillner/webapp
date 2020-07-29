@@ -18,6 +18,7 @@
         {
             "name": "nginx",
             "image": "scootay237/nginx",
+            "hostname": "nginx",
             "essential": true,
             "portMappings": [
                 {
